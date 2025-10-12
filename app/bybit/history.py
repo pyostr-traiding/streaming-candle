@@ -48,6 +48,7 @@ def init_history(
 
     with server_redis.pipeline() as pipe:
         for i in closed_candles:
+            print(i)
             candle = {
                 'ts': int(i[0]),
                 'o': i[1],
@@ -55,6 +56,7 @@ def init_history(
                 'l': i[3],
                 'c': i[4],
                 'v': i[5],
+                't': i[6],
                 'dt': str(ms_to_dt(int(i[0]))),
             }
             pipe.zadd(redis_key, {json.dumps(candle): candle["ts"]})

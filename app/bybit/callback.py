@@ -33,6 +33,7 @@ def callback_kline(data):
         'l': candle['low'],
         'c': candle['close'],
         'v': candle['volume'],
+        't': candle['turnover'],
         'dt': str(ms_to_dt(last_ts)),
     }
 

@@ -3,10 +3,12 @@ version: '3'
 services:
 
   service:
-    container_name: streaming-candle
+    container_name: streaming-candle-bybit
     build: ./
     restart: always
     env_file: ./.env
+    command:
+      - poetry run python app/bybit/main.py
     deploy:
       resources:
         limits:
@@ -15,7 +17,6 @@ services:
           cpus: '0.15'
     networks:
       - GLOBAL_NETWORK
-
 
 volumes:
   redis-data:

@@ -17,6 +17,3 @@ COPY . /code/
 # Установка зависимостей
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi --no-root
-
-# Запуск приложения
-CMD ["poetry", "run", "python", "main.py"]

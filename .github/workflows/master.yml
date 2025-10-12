@@ -42,7 +42,7 @@ jobs:
                 sudo mkdir apps
             fi
             # Проверяем, существует ли папка apps/STREAMING-CANLDE
-            if [ -d "apps/STREAMS" ]; then
+            if [ -d "apps/STREAMING" ]; then
                 sudo rm -rf apps/STREAMING
             fi
             sudo mkdir apps/STREAMING

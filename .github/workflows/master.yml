@@ -38,13 +38,20 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            sudo rm -rf apps/STREAMS
+            # Проверяем, существует ли папка apps
+            if [ ! -d "apps" ]; then
+                sudo mkdir apps
+            fi
+            # Проверяем, существует ли папка apps/STREAMING-CANLDE
+            if [ -d "apps/STREAMS" ]; then
+                sudo rm -rf apps/STREAMING-CANLDE
+            fi
             sudo mkdir apps/STREAMS
-            cd apps/STREAMS
+            cd apps/STREAMING-CANLDE
             
             script: |
             # Попытка клонирования репозитория
-            if ! sudo git clone https://username:${{ secrets.ACCESS_TOKEN }}@github.com/pyostr-traiding/streams.git .; then
+            if ! sudo git clone https://username:${{ secrets.ACCESS_TOKEN }}@github.com/pyostr-traiding/streaming-candle.git .; then
               echo "Ошибка при клонировании репозитория"
               exit 1
             fi

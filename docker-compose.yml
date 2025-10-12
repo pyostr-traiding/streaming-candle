@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  bybit-reader-klines:
+    build: ./
+    restart: always
+    env_file: ./.env
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+        reservations:
+          cpus: '0.15'
+
+volumes:
+  redis-data:

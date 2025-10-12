@@ -2,7 +2,8 @@ version: '3'
 
 services:
 
-  bybit-reader-klines:
+  service:
+    container_name: streaming-candle
     build: ./
     restart: always
     env_file: ./.env

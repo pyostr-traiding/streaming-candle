@@ -1,5 +1,6 @@
 import json
 
+from app.pusher import publish_redis_update
 from app.redis_conf import server_redis
 from app.utils import ms_to_dt
 
@@ -25,21 +26,27 @@ def callback_kline(data):
         last_ts_per_topic[topic] = ts
         return
 
+    closed_candle = {
+        'ts': last_ts,
+        'o': candle['open'],
+        'h': candle['high'],
+        'l': candle['low'],
+        'c': candle['close'],
+        'v': candle['volume'],
+        'dt': str(ms_to_dt(last_ts)),
+    }
+
     if ts > last_ts:
         # Закрылась предыдущая свеча (last_ts)
-        closed_candle = {
-            'ts': last_ts,
-            'o': candle['open'],
-            'h': candle['high'],
-            'l': candle['low'],
-            'c': candle['close'],
-            'v': candle['volume'],
-            'dt': str(ms_to_dt(last_ts)),
-        }
         # Записываем закрытую свечу в Redis ZSET
         server_redis.zadd(redis_key, {json.dumps(closed_candle): closed_candle['ts']})
-
-        print(f"Закрытая свеча для {topic}: {closed_candle}")
-
+        # print(f"Закрытая свеча для {topic}: {closed_candle}")
         # Обновляем последний TS
         last_ts_per_topic[topic] = ts
+
+    publish_redis_update(
+        exchange='bybit',
+        symbol=symbol,
+        interval=interval,
+        data=closed_candle,
+    )

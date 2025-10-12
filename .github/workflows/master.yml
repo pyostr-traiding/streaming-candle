@@ -44,10 +44,10 @@ jobs:
             fi
             # Проверяем, существует ли папка apps/STREAMING-CANLDE
             if [ -d "apps/STREAMS" ]; then
-                sudo rm -rf apps/STREAMING-CANLDE
+                sudo rm -rf apps/STREAMING
             fi
-            sudo mkdir apps/STREAMS
-            cd apps/STREAMING-CANLDE
+            sudo mkdir apps/STREAMING
+            cd apps/STREAMING
             
             script: |
             # Попытка клонирования репозитория

@@ -7,8 +7,7 @@ services:
     build: ./
     restart: always
     env_file: ./.env
-    command:
-      - poetry run python app/bybit/main.py
+    command: ["poetry", "run", "python", "app/bybit/main.py"]
     deploy:
       resources:
         limits:
